@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  mankeli:
+    build:
+      context: ./
+    image: mankeli_dev
+    volumes:
+      - ./data:/srv/flask_app/data
+    ports:
+      - '9090:80'
+    container_name: mankeli
