@@ -1,28 +1,16 @@
 from flask import Flask, escape, request, jsonify
 import csv
 import os
+from magic import get_grades
 
 app = Flask(__name__)
 
-
+grades = get_grades()
 
 @app.route('/grades/<studentnumber>')
 def hello(studentnumber):
   if (request.headers.get('Authorization') != os.environ.get('TOKEN')):
     return jsonify({ 'error': 'Invalid token!'}), 403
-
-  grades = {
-    "014": {
-      0: {"course": "TIRA", "grade": 5, "generated": True},
-      1: {"course": "TITO", "grade": 4, "generated": False},
-      2: {"course": "OHPE", "grade": 3, "generated": False}
-    },
-    "015": {
-      0: {"course": "TIRA", "grade": 1, "generated": True},
-      1: {"course": "TITO", "grade": 2, "generated": False},
-      2: {"course": "OHPE", "grade": 2, "generated": False}
-    }
-  }
 
   return jsonify(grades[studentnumber])
 

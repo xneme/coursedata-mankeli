@@ -13,5 +13,4 @@ RUN pip install -r requirements.txt --src /usr/local/src
 
 COPY nginx.conf /etc/nginx
 RUN chmod +x ./start.sh
-RUN chmod +r ./mankeli.py
 CMD ["./start.sh"]

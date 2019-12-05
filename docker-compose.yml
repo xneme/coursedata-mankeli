@@ -11,4 +11,5 @@ services:
       - '9090:80'
     environment:
       - TOKEN=DEVTOKEN
+      - SURPRISE_DATA_FOLDER=/srv/flask_app/data
     container_name: mankeli
