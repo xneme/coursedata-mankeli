@@ -8,6 +8,9 @@ app = Flask(__name__)
 
 @app.route('/grades/<studentnumber>')
 def hello(studentnumber):
+  if (request.headers.get('Authorization') != os.environ.get('TOKEN')):
+    return jsonify({ 'error': 'Invalid token!'}), 403
+
   grades = {
     "014": {
       0: {"course": "TIRA", "grade": 5, "generated": True},
@@ -32,11 +35,3 @@ def sample():
   with open('data/sample.csv', 'r') as file:
     reader = csv.reader(file, delimiter=';')
     return jsonify(list(reader))
-
-@app.route('/token')
-def tokencheck():
-  token = request.headers.get('Authorization')
-  if (token == os.environ.get('TOKEN')):
-    return "token ok"
-  else:
-    return "token not ok"
