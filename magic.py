@@ -6,12 +6,17 @@ from surprise import SVD
 from surprise import Dataset
 from surprise import Reader
 
-# courses should be a list of names for the courses that the user wants grades for
-# id should be the same number that was used as id in update_model
-def get_grades(algo, id, courses):
+path = ''
+
+# courses_dict should be a python dictonary with course names as keys and grades as values
+def get_grades(course_grades_dict):
+  df = load_data(path)
+  df = update_data(df, "1", course_grades_dict)
+  algo = get_fit(df)
+
   grades = {}
-  for c in courses:
-    result = algo.predict(str(id), c)
+  for c in np.unique(df.course):
+    result = algo.predict(str("1"), c)
     grades[c] = result.est
 
   return grades
@@ -27,7 +32,7 @@ def get_fit(df):
 # and values are grades from those courses
 # id should be a number
 # This function adds the courses that the student has done into the pandas dataframe
-def update_model(df, id, course_grades_dict):
+def update_data(df, id, course_grades_dict):
   for c in course_grades_dict.keys():
     df = df.append({'id': str(id), 'course': c, 'grade': str(course_grades_dict[c])}, ignore_index=True)
   return df
