@@ -1,5 +1,6 @@
 from flask import Flask, escape, request, jsonify
 import csv
+import os
 
 app = Flask(__name__)
 
@@ -31,3 +32,11 @@ def sample():
   with open('data/sample.csv', 'r') as file:
     reader = csv.reader(file, delimiter=';')
     return jsonify(list(reader))
+
+@app.route('/token')
+def tokencheck():
+  token = request.headers.get('Authorization')
+  if (token == os.environ.get('TOKEN')):
+    return "token ok"
+  else:
+    return "token not ok"

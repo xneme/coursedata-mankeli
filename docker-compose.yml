@@ -9,4 +9,6 @@ services:
       - ./data:/srv/flask_app/data
     ports:
       - '9090:80'
+    environment:
+      - TOKEN=DEVTOKEN
     container_name: mankeli
