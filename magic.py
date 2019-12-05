@@ -1,20 +1,33 @@
 import csv
 import os
+import pandas as pd
 
 from surprise import SVD
 from surprise import Dataset
 from surprise import Reader
 
-def get_grades():
-  return {
-    "014": {
-      0: {"course": "TIRA", "grade": 5, "generated": True},
-      1: {"course": "TITO", "grade": 4, "generated": False},
-      2: {"course": "OHPE", "grade": 3, "generated": False}
-    },
-    "015": {
-      0: {"course": "TIRA", "grade": 1, "generated": True},
-      1: {"course": "TITO", "grade": 2, "generated": False},
-      2: {"course": "OHPE", "grade": 2, "generated": False}
-    }
+def get_grades(algo, id, courses):
+  grades = {}
+  for c in courses:
+    result = algo.predict(str(id), c)
+    grades[c] = result.est
+
+  return grades
   }
+
+def get_fit(df):
+  reader = Reader(rating_scale=(1, 5))
+  data = Dataset.load_from_df(df[['id', 'course', 'grade']], reader)
+  algo = SVD()
+  return algo.fit(data.build_full_trainset())
+
+def update_model(df, id, course_grades_dict):
+  for c in course_grades_dict.keys():
+    df = df.append({'id': str(id), 'course': c, 'grade': str(course_grades_dict[c])}, ignore_index=True)
+  return df
+
+def load_data(path)
+    df = pd.read_csv(path, sep = ",", parse_dates = True)
+    del df['date']
+    return df
+
