@@ -12,4 +12,4 @@ services:
     environment:
       - TOKEN=DEVTOKEN
       - SURPRISE_DATA_FOLDER=/srv/flask_app/data
-    container_name: mankeli
+    container_name: mankeli_dev

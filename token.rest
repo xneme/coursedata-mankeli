@@ -1,2 +1,10 @@
-GET http://localhost:9090/grades/014
+POST http://localhost:9090/grades
 Authorization: DEVTOKEN
+Content-Type: application/json
+
+{
+  "Tietorakenteet ja algoritmit": 5,
+  "Ohjelmoinnin perusteet": 5,
+  "Design and Analysis of Algorithms": 5,
+  "Kandidaatin tutkielma": 5
+}
